@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
     <Folder Include="Dtos\" />
-    <Folder Include="MediatR\Customer\Query\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="MediatR\Customer\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

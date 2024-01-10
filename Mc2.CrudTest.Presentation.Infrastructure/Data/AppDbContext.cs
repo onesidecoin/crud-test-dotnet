@@ -1,20 +1,23 @@
 ﻿using Mc2.CrudTest.Presentation.Domain.Entities;
+using Mc2.CrudTest.Presentation.Infrastructure.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Mc2.CrudTest.Presentation.Infrastructure.Data
 {
-    internal class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
         }
 
-        public DbSet<Customer> Customers { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(CustomerEntityConfiguration)));
+        }
+
+        public DbSet<Customer> Customers { get; set; }
     }
 }
