@@ -13,6 +13,8 @@ namespace Mc2.CrudTest.Presentation
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
 
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerCommand).Assembly));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
