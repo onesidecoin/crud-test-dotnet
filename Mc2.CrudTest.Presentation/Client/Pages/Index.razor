@@ -69,7 +69,8 @@
 
 		if (result.IsSuccessStatusCode)
 		{
-			Customers = JsonSerializer.Deserialize<List<CustomerDto>>(await result.Content.ReadAsStringAsync());
+			Customers = await result.Content.ReadFromJsonAsync<List<CustomerDto>>();
+			// Customers = JsonSerializer.Deserialize<List<CustomerDto>>("");
 		}
 		else
 		{

@@ -12,7 +12,6 @@ namespace Mc2.CrudTest.Presentation.Shared.Dtos.Customer
         public string Email { get; set; }
         public int BankAccountNumber { get; set; }
 
-        [NotMapped]
         public string FullName { get { return Firstname + " " + Lastname; } set { } }
     }
 }
