@@ -1,14 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mc2.CrudTest.Presentation.Domain.Entities
+namespace Mc2.CrudTest.Presentation.Application.Dtos
 {
-    public class Customer
+    public class CustomerDto
     {
-        public Customer()
-        {
-            Id = Guid.NewGuid();
-        }
-
         public Guid Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
@@ -16,5 +11,8 @@ namespace Mc2.CrudTest.Presentation.Domain.Entities
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public int BankAccountNumber { get; set; }
+
+        [NotMapped]
+        public string FullName { get { return Firstname + " " + Lastname; } set { } }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Mc2.CrudTest.Presentation.Application.MediatR.Customer.Commands;
+﻿using Mc2.CrudTest.Presentation.Application.Customers.Commands.CreateCustomer;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
