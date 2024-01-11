@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Mc2.CrudTest.Presentation.Application.Dtos;
 using Mc2.CrudTest.Presentation.Domain.Entities;
 using Mc2.CrudTest.Presentation.Domain.Interfaces;
 using Mc2.CrudTest.Presentation.Shared.Dtos;
+using Mc2.CrudTest.Presentation.Shared.Dtos.Customer;
 using MediatR;
 
 namespace Mc2.CrudTest.Presentation.Application.Customers.Commands.CreateCustomer

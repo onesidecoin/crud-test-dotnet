@@ -1,9 +1,89 @@
 ﻿@page "/"
+@using Mc2.CrudTest.Presentation.Shared.Dtos.Customer
+@using System.Text.Json.Serialization
+@using System.Text.Json
+@inject HttpClient Http
+@inject ISnackbar _snackbar
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Customers</PageTitle>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<MudTable Virtualize Height="65vh"
+		  FixedHeader Elevation="25"
+			  T="CustomerDto"
+			  HorizontalScrollbar="true"
+			  ServerData="@GetUsers"
+			  Hover="true"
+			  Breakpoint="Breakpoint.Sm"
+			  Loading="Loading"
+			  LoadingProgressColor="Color.Info"
+			  @ref="Table">
+		<HeaderContent>
+			<MudTh>Firstname</MudTh>
+			<MudTh>Lastname</MudTh>
+			<MudTh>Email</MudTh>
+			<MudTh>DateOfBirth</MudTh>
+			<MudTh>PhoneNumber</MudTh>
+			<MudTh>BankAccountNumber</MudTh>
+			<MudTh>Action</MudTh>
+			<MudTh></MudTh>
+		</HeaderContent>
+		<RowTemplate>
+			<MudTd DataLabel="Firstname">@context.Firstname</MudTd>
+			<MudTd DataLabel="Lastname">@context.Lastname</MudTd>
+			<MudTd DataLabel="Email">@context.Email</MudTd>
+			<MudTd DataLabel="DateOfBirth">@context.DateOfBirth.ToShortDateString()</MudTd>
+			<MudTd DataLabel="PhoneNumber">@context.PhoneNumber</MudTd>
+			<MudTd DataLabel="BankAccountNumber">@context.BankAccountNumber</MudTd>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+			<MudTd DataLabel="Action">
+			</MudTd>
+
+		</RowTemplate>
+		<NoRecordsContent>
+			<MudText>داده ای یافت نشد</MudText>
+		</NoRecordsContent>
+		<LoadingContent>
+			<MudText>در حال دریافت داده ...</MudText>
+		</LoadingContent>
+		<PagerContent>
+			<MudTablePager />
+		</PagerContent>
+	</MudTable>
+
+	@code {
+
+	bool Loading;
+	MudTable<CustomerDto> Table;
+
+	private async Task<TableData<CustomerDto>> GetUsers(TableState state)
+	{
+		List<CustomerDto> Customers = new();
+
+		Loading= true;
+
+		StateHasChanged();
+
+		var result = await Http.GetAsync("api/customer/getall");
+
+
+		if (result.IsSuccessStatusCode)
+		{
+			Customers = JsonSerializer.Deserialize<List<CustomerDto>>(await result.Content.ReadAsStringAsync());
+		}
+		else
+		{
+			// todo : show dialog
+			_snackbar.Add("an error occured on fetch data from server", Severity.Error);
+		}
+
+		Loading = false;
+
+		return new TableData<CustomerDto>()
+			{
+				TotalItems = Customers.Count,
+				Items = Customers
+			};
+
+	}
+}

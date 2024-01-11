@@ -5,6 +5,7 @@ namespace Mc2.CrudTest.Presentation.Domain.Interfaces
 {
     public interface ICustomerRepository
     {
+        public Task<IEnumerable<Customer>> GetAll();
         public Task<Customer> GetByIdAsync(Guid id);
         public Task<IEnumerable<Customer>> GetByIdsAsync(IEnumerable<Guid> ids);
 

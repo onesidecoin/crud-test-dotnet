@@ -1,6 +1,7 @@
 ﻿using Mc2.CrudTest.Presentation.Application.Customers.Commands.CreateCustomer;
 using Mc2.CrudTest.Presentation.Application.Customers.Commands.DeleteCustomer;
 using Mc2.CrudTest.Presentation.Application.Customers.Commands.EditCustomer;
+using Mc2.CrudTest.Presentation.Application.Customers.Queries.GetAll;
 using Mc2.CrudTest.Presentation.Application.Customers.Queries.GetCusomers;
 using Mc2.CrudTest.Presentation.Application.Customers.Queries.GetCustomer;
 using MediatR;
@@ -20,6 +21,13 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             _sender=sender;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _sender.Send(new GetAllCustomersQuery());;
+            return Ok(result);
+        }     
+        
         [HttpGet]
         public async Task<IActionResult> GetById([FromQuery] GetCustomerByIdQuery getCustomerByIdQuery)
         {
